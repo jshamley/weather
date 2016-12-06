@@ -22,9 +22,8 @@ class App extends Component {
     e.preventDefault();
 
     // search wunderground for weather
-    $.getJSON('http://api.wunderground.com/api/' + process.env.REACT_APP_WUNDERGROUND_API_KEY + '/conditions/q/' + this.state.searchValue + '.json')
+    $.getJSON('https://api.wunderground.com/api/' + process.env.REACT_APP_WUNDERGROUND_API_KEY + '/conditions/q/' + this.state.searchValue + '.json')
       .then(data => {
-        console.log(data, this.state);
         if (data.response.error) {
           console.error(data.response.error);
           this.setState({
@@ -59,8 +58,6 @@ class App extends Component {
     } else if (this.state.showError) {
       error = `${this.state.error}`;
     }
-
-    console.log(this.state);
 
     return (
       <div className="App">
