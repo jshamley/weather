@@ -10,7 +10,8 @@ class App extends Component {
     super(props);
     this.state = {
       searchValue: '',
-      showResults: false
+      showResults: false,
+      showError: false
     }
 
     this.searchWeather = this.searchWeather.bind(this);
@@ -21,13 +22,25 @@ class App extends Component {
     e.preventDefault();
 
     // search wunderground for weather
-    $.getJSON('http://api.wunderground.com/api/b6582f1b71cd734c/conditions/q/CA/San_Francisco.json')
+    $.getJSON('http://api.wunderground.com/api/' + process.env.REACT_APP_WUNDERGROUND_API_KEY + '/conditions/q/' + this.state.searchValue + '.json')
       .then(data => {
         console.log(data, this.state);
-        this.setState({
-          showResults: true,
-          results: data.current_observation
-        });
+        if (data.response.error) {
+          console.error(data.response.error);
+          this.setState({
+            showError: true,
+            showResults: false,
+            results: undefined,
+            error: data.response.error.description
+          });
+        } else {
+          this.setState({
+            showResults: true,
+            showError: false,
+            error: undefined,
+            results: data.current_observation
+          });
+        }
       });
   }
 
@@ -36,13 +49,15 @@ class App extends Component {
   }
 
   render() {
-    let city, image, temp, conditions;
+    let city, image, temp, conditions, error;
 
     if (this.state.showResults) {
       city = `${this.state.results.display_location.city} ${this.state.results.display_location.state}`;
       image = `<img src="${this.state.results.icon_url}" alt="current conditions icon" />`;
       temp = `${this.state.results.temp_f}`;
       conditions = `${this.state.results.weather}`;
+    } else if (this.state.showError) {
+      error = `${this.state.error}`;
     }
 
     console.log(this.state);
@@ -72,6 +87,11 @@ class App extends Component {
               <h3>Current Weather for {city}</h3>
               <h5>{temp}&deg; and {conditions}</h5>
               <p dangerouslySetInnerHTML={{__html: image}}></p>
+            </div>
+          </div>
+          <div className={this.state.showError ? 'row search-results' : 'hidden'}>
+            <div className="col-lg-8 col-lg-offset-2 text-center">
+              <h3 className="text-danger">{error}</h3>
             </div>
           </div>
           <div className="row footer">
