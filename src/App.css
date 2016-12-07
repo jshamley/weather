@@ -30,6 +30,13 @@
   border-color: #a94442;
 }
 
+.form-error {
+  bottom: -2rem;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
 .footer {
   bottom: 0;
   left: 0;

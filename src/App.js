@@ -104,7 +104,7 @@ class App extends Component {
               </p>
               <Validation.components.Form onSubmit={this.searchWeather}>
                 <div className="input-group">
-                  <Validation.components.Input name="search" errorClassName="input-error" placeholder="80537" className="form-control" value={this.state.search} onChange={this.searchChange} validations={['required', 'search']} />
+                  <Validation.components.Input name="search" containerClassName="form-input-wrapper" errorClassName="input-error" placeholder="80537" className="form-control" value={this.state.search} onChange={this.searchChange} validations={['required', 'search']} />
                   <span className="input-group-btn">
                     <Validation.components.Button className="btn btn-success" type="submit">Search!</Validation.components.Button>
                   </span>
