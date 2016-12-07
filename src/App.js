@@ -140,7 +140,7 @@ class App extends Component {
               <div className="col-lg-8 col-lg-offset-2 text-center">
                 <h6>
                   <a href="https://www.wunderground.com/" target="_blank">
-                    Weather data provided by<br /><img src="http://icons.wxug.com/graphics/wu2/logo_130x80.png" alt="wunderground logo" />
+                    Weather data provided by<br /><img src="https://icons.wxug.com/graphics/wu2/logo_130x80.png" alt="wunderground logo" />
                   </a>
                 </h6>
               </div>
