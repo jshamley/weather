@@ -1,14 +1,41 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import Validation from 'react-validation';
+import validator from 'validator';
 import logo from './logo.svg';
 import './App.css';
 
 let $ = require('jquery');
 
+Object.assign(Validation.rules, {
+  required: {
+    rule: value => {
+      return value && value.toString().trim();
+    },
+    hint: value => {
+      return <span className='form-error text-danger is-visible'>Required</span>
+    }
+  },
+  search: {
+    rule: value => {
+      return value && validator.isNumeric(value) && validator.isLength(value, {min:5, max:5});
+    },
+    hint: value => {
+      return <span className='form-error text-danger is-visible'>{value} isnt a Zipcode.</span>
+    }
+  },
+  api: {
+    hint: value => (
+      <button className="form-error text-danger is-visible">API Error on "{value}" value. Focus to hide.</button>
+    )
+  }
+});
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      search: '',
       searchValue: '',
       showResults: false,
       showError: false
@@ -75,12 +102,14 @@ class App extends Component {
               <p className="App-intro">
                 Enter your zipcode to search for the weather in your area.
               </p>
-              <div className="input-group">
-                <input type="text" name="search" placeholder="search by zipcode" className="form-control" onChange={this.searchChange} />
-                <span className="input-group-btn">
-                  <button onClick={this.searchWeather} className="btn btn-success" type="button">Search!</button>
-                </span>
-              </div>
+              <Validation.components.Form onSubmit={this.searchWeather}>
+                <div className="input-group">
+                  <Validation.components.Input name="search" errorClassName="input-error" placeholder="80537" className="form-control" value={this.state.search} onChange={this.searchChange} validations={['required', 'search']} />
+                  <span className="input-group-btn">
+                    <Validation.components.Button className="btn btn-success" type="submit">Search!</Validation.components.Button>
+                  </span>
+                </div>
+              </Validation.components.Form>
             </div>
           </div>
           <div className={this.state.showResults ? 'row search-results' : 'hidden'}>

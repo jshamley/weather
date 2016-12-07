@@ -26,6 +26,10 @@
   margin-top: 4rem;
 }
 
+.input-error {
+  border-color: #a94442;
+}
+
 .footer {
   bottom: 0;
   left: 0;
