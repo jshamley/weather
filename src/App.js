@@ -49,7 +49,7 @@ class App extends Component {
     e.preventDefault();
     let self = this;
 
-    // search wunderground for weather
+    // search wunderground for current weather
     $.ajax({
       url: 'https://api.wunderground.com/api/' + process.env.REACT_APP_WUNDERGROUND_API_KEY + '/conditions/q/' + this.state.searchValue + '.json',
       dataType: 'jsonp',
@@ -72,6 +72,8 @@ class App extends Component {
         }
       }
     });
+
+    // search wunderground for 10 day forecast
   }
 
   searchChange(e) {
@@ -79,13 +81,15 @@ class App extends Component {
   }
 
   render() {
-    let city, image, temp, conditions, error;
+    let city, image, temp, conditions, error, satellite;
+    const apiKey = process.env.REACT_APP_WUNDERGROUND_API_KEY;
 
     if (this.state.showResults) {
       city = `${this.state.results.display_location.city} ${this.state.results.display_location.state}`;
       image = `<img src="${this.state.results.icon_url}" alt="current conditions icon" />`;
       temp = `${this.state.results.temp_f}`;
       conditions = `${this.state.results.weather}`;
+      satellite = `<img src="http://api.wunderground.com/api/${apiKey}/animatedradar/q/${this.state.searchValue}.gif?width=750&height=375&newmaps=1&num=5&delay=50" alt="current conditions icon" />`;
     } else if (this.state.showError) {
       error = `${this.state.error}`;
     }
@@ -117,6 +121,7 @@ class App extends Component {
               <h3>Current Weather for {city}</h3>
               <h5>{temp}&deg; and {conditions}</h5>
               <p dangerouslySetInnerHTML={{__html: image}}></p>
+              <p dangerouslySetInnerHTML={{__html: satellite}}></p>
             </div>
           </div>
           <div className={this.state.showError ? 'row search-results' : 'hidden'}>

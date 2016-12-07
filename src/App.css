@@ -23,7 +23,8 @@
 }
 
 .search-results {
-  margin-top: 4rem;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
 }
 
 .input-error {
@@ -38,10 +39,19 @@
 }
 
 .footer {
+  background: white;
   bottom: 0;
   left: 0;
   position: fixed;
   width: 100%;
+}
+
+.footer a {
+  color: #777;
+}
+
+.footer img {
+  max-width: 100px;
 }
 
 @keyframes App-logo-spin {
