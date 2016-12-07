@@ -28,42 +28,24 @@ class App extends Component {
       dataType: 'jsonp',
       success: function(data) {
         console.log(data);
-        self.setState({
-          showResults: true,
-          showError: false,
-          error: undefined,
-          results: data.current_observation
-        });
-      },
-      error: function(err) {
-        console.error(err);
-        self.setState({
-          showError: true,
-          showResults: false,
-          results: undefined,
-          error: err.description
-        });
+        if (data.response.error) {
+          console.error(data.response.error);
+          self.setState({
+            showError: true,
+            showResults: false,
+            results: undefined,
+            error: data.response.error.description
+          });
+        } else {
+          self.setState({
+            showResults: true,
+            showError: false,
+            error: undefined,
+            results: data.current_observation
+          });
+        }
       }
     });
-    // $.getJSON('https://api.wunderground.com/api/' + process.env.REACT_APP_WUNDERGROUND_API_KEY + '/conditions/q/' + this.state.searchValue + '.json')
-    //   .then(data => {
-    //     if (data.response.error) {
-    //       console.error(data.response.error);
-    //       this.setState({
-    //         showError: true,
-    //         showResults: false,
-    //         results: undefined,
-    //         error: data.response.error.description
-    //       });
-    //     } else {
-    //       this.setState({
-    //         showResults: true,
-    //         showError: false,
-    //         error: undefined,
-    //         results: data.current_observation
-    //       });
-    //     }
-    //   });
   }
 
   searchChange(e) {
