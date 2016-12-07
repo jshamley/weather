@@ -4,17 +4,25 @@
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  height: 30px;
+  margin-left: -1.5rem;
 }
 
 .App-header {
   background-color: #222;
-  padding: 20px;
+  padding: 1rem;
   color: white;
+  overflow: hidden;
+}
+
+.App-header h2 {
+  font-family: Copperplate, Arial, Helvetica, sans-serif;
+  line-height: 1;
+  margin: 0;
 }
 
 .App-body {
-  padding-bottom: 2rem;
+  padding-bottom: 10rem;
   padding-top: 2rem;
 }
 
@@ -39,7 +47,7 @@
 }
 
 .footer {
-  background: white;
+  background: #222;
   bottom: 0;
   left: 0;
   position: fixed;
@@ -47,7 +55,7 @@
 }
 
 .footer a {
-  color: #777;
+  color: white;
 }
 
 .footer img {

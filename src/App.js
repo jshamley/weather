@@ -97,8 +97,14 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Shamley Weather</h2>
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-8 col-lg-offset-2">
+                <img src={logo} className="App-logo pull-left" alt="logo" />
+                <h2 className="pull-left">Shamley Weather</h2>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="App-body container">
           <div className="row">
@@ -129,13 +135,15 @@ class App extends Component {
               <h3 className="text-danger">{error}</h3>
             </div>
           </div>
-          <div className="row footer">
-            <div className="col-lg-8 col-lg-offset-2 text-center">
-              <h6>
-                <a href="https://www.wunderground.com/" target="_blank">
-                  Weather data provided by<br /><img src="http://icons.wxug.com/graphics/wu2/logo_130x80.png" alt="wunderground logo" />
-                </a>
-              </h6>
+          <div className="footer">
+            <div className="row">
+              <div className="col-lg-8 col-lg-offset-2 text-center">
+                <h6>
+                  <a href="https://www.wunderground.com/" target="_blank">
+                    Weather data provided by<br /><img src="http://icons.wxug.com/graphics/wu2/logo_130x80.png" alt="wunderground logo" />
+                  </a>
+                </h6>
+              </div>
             </div>
           </div>
         </div>
