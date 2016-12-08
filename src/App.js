@@ -81,7 +81,6 @@ class App extends Component {
       url: 'https://api.wunderground.com/api/' + process.env.REACT_APP_WUNDERGROUND_API_KEY + '/forecast10day/q/' + this.state.searchValue + '.json',
       dataType: 'jsonp',
       success: function(data) {
-        console.log(data);
         if (data.response.error) {
           console.error(data.response.error);
           self.setState({
