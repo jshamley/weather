@@ -38,7 +38,9 @@ class App extends Component {
       search: '',
       searchValue: '',
       showResults: false,
-      showError: false
+      showError: false,
+      forecast: [],
+      forecastText: []
     }
 
     this.searchWeather = this.searchWeather.bind(this);
@@ -75,6 +77,31 @@ class App extends Component {
 
     // search wunderground for 10 day forecast
     // https://www.wunderground.com/weather/api/d/docs?d=data/forecast10day&MR=1
+    $.ajax({
+      url: 'https://api.wunderground.com/api/' + process.env.REACT_APP_WUNDERGROUND_API_KEY + '/forecast10day/q/' + this.state.searchValue + '.json',
+      dataType: 'jsonp',
+      success: function(data) {
+        console.log(data);
+        if (data.response.error) {
+          console.error(data.response.error);
+          self.setState({
+            showError: true,
+            showResults: false,
+            forecast: [],
+            forecastText: [],
+            error: data.response.error.description
+          });
+        } else {
+          self.setState({
+            showResults: true,
+            showError: false,
+            error: undefined,
+            forecast: data.forecast.simpleforecast.forecastday,
+            forecastText: data.forecast.txt_forecast.forecastday
+          });
+        }
+      }
+    });
   }
 
   searchChange(e) {
@@ -84,12 +111,16 @@ class App extends Component {
   render() {
     let city, image, temp, conditions, error, satellite;
     const apiKey = process.env.REACT_APP_WUNDERGROUND_API_KEY;
+    let forecast = this.state.forecast;
+    let forecastText = this.state.forecastText;
 
     if (this.state.showResults) {
-      city = `${this.state.results.display_location.city} ${this.state.results.display_location.state}`;
-      image = `<img src="${this.state.results.icon_url}" alt="current conditions icon" />`;
-      temp = `${this.state.results.temp_f}`;
-      conditions = `${this.state.results.weather}`;
+      if (this.state.results) {
+        city = `${this.state.results.display_location.city} ${this.state.results.display_location.state}`;
+        image = `<img src="${this.state.results.icon_url}" alt="current conditions icon" />`;
+        temp = `${this.state.results.temp_f}`;
+        conditions = `${this.state.results.weather}`;
+      }
       satellite = `<img src="http://api.wunderground.com/api/${apiKey}/animatedradar/q/${this.state.searchValue}.gif?width=750&height=375&newmaps=1&num=5&delay=50" alt="current conditions icon" />`;
     } else if (this.state.showError) {
       error = `${this.state.error}`;
@@ -134,6 +165,33 @@ class App extends Component {
           <div className={this.state.showError ? 'row search-results' : 'hidden'}>
             <div className="col-lg-8 col-lg-offset-2 text-center">
               <h3 className="text-danger">{error}</h3>
+            </div>
+          </div>
+          <div className={this.state.showResults ? 'row search-results' : 'hidden'}>
+            <div className="col-lg-8 col-lg-offset-2 text-center">
+              <h3>10 Day Forecast</h3>
+              <div className="table-responsive">
+                <table className="table table-hover table-bordered">
+                  <thead>
+                    <tr>
+                      <td>Date</td>
+                      <td>Hi / Low</td>
+                      <td>Day</td>
+                      <td>Night</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {forecast.map((post, i) => 
+                      <tr key={i}>
+                        <td><h4>{post.date.weekday}</h4><br />{post.date.monthname} {post.date.day}</td>
+                        <td>{post.high.fahrenheit} / {post.low.fahrenheit}</td>
+                        <td>{forecastText[i * 2].fcttext}</td>
+                        <td>{forecastText[i * 2 + 1].fcttext}</td>
+                      </tr>  
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
           <div className="footer">
