@@ -74,6 +74,7 @@ class App extends Component {
     });
 
     // search wunderground for 10 day forecast
+    // https://www.wunderground.com/weather/api/d/docs?d=data/forecast10day&MR=1
   }
 
   searchChange(e) {
