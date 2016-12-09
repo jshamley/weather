@@ -76,7 +76,6 @@ class App extends Component {
     });
 
     // search wunderground for 10 day forecast
-    // https://www.wunderground.com/weather/api/d/docs?d=data/forecast10day&MR=1
     $.ajax({
       url: 'https://api.wunderground.com/api/' + process.env.REACT_APP_WUNDERGROUND_API_KEY + '/forecast10day/q/' + this.state.searchValue + '.json',
       dataType: 'jsonp',
