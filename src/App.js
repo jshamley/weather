@@ -81,6 +81,7 @@ class App extends Component {
       url: 'https://api.wunderground.com/api/' + process.env.REACT_APP_WUNDERGROUND_API_KEY + '/forecast10day/q/' + this.state.searchValue + '.json',
       dataType: 'jsonp',
       success: function(data) {
+        console.log(data);
         if (data.response.error) {
           console.error(data.response.error);
           self.setState({
@@ -170,22 +171,32 @@ class App extends Component {
             <div className="col-lg-8 col-lg-offset-2 text-center">
               <h3>10 Day Forecast</h3>
               <div className="table-responsive">
-                <table className="table table-hover table-bordered">
+                <table className="table table-hover table-bordered forecast-table">
                   <thead>
                     <tr>
-                      <td>Date</td>
-                      <td>Hi / Low</td>
-                      <td>Day</td>
-                      <td>Night</td>
+                      <td><b>Date</b></td>
+                      <td><b>High/Low</b></td>
+                      <td><b>Day Summary</b></td>
+                      <td><b>Night Summary</b></td>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="forecast-table-body">
                     {forecast.map((post, i) => 
                       <tr key={i}>
-                        <td><h4>{post.date.weekday}</h4><br />{post.date.monthname} {post.date.day}</td>
-                        <td>{post.high.fahrenheit} / {post.low.fahrenheit}</td>
-                        <td>{forecastText[i * 2].fcttext}</td>
-                        <td>{forecastText[i * 2 + 1].fcttext}</td>
+                        <td>
+                          <h4 className="text-primary">{post.date.weekday}</h4>
+                          {post.date.monthname} {post.date.day}
+                        </td>
+                        <td className="no-wrap">
+                          <div>{post.high.fahrenheit}&deg;/{post.low.fahrenheit}&deg; F</div>
+                          <div>{post.high.celsius}&deg;/{post.low.celsius}&deg; C</div>
+                        </td>
+                        <td>
+                          {forecastText[i * 2].fcttext}
+                        </td>
+                        <td>
+                          {forecastText[i * 2 + 1].fcttext}
+                        </td>
                       </tr>  
                     )}
                   </tbody>

@@ -39,6 +39,18 @@
   border-color: #a94442;
 }
 
+.forecast-table > .forecast-table-body > tr > td {
+  padding: 2rem 1rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.forecast-table > .forecast-table-body > tr > td.no-wrap {
+  white-space: nowrap;
+}
+.forecast-table > .forecast-table-body > tr > td h4 {
+  margin: 0;
+}
+
 .form-error {
   bottom: -2rem;
   left: 0;
