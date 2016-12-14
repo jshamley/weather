@@ -14,3 +14,13 @@ A Simple Weather App
 ## License
 
 This project is licensed under the Apache License - see the [LICENSE.md](LICENSE.md) file for details
+
+## To Run
+
+Run `npm install`
+
+Add a `.env` file to the root of this project and add a variable `REACT_APP_WUNDERGROUND_API_KEY=<YOURAPIKEY>`
+
+## To Build
+
+Run `npm run build`
